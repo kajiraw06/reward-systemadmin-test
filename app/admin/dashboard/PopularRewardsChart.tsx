@@ -201,7 +201,7 @@ export default function PopularRewardsChart() {
             <ResponsiveContainer width="100%" height={300}>
               <PieChart>
                 <Pie
-                  data={categoryData as unknown as Record<string, unknown>[]}
+                  data={categoryData as any}
                   cx="50%"
                   cy="50%"
                   labelLine={false}
