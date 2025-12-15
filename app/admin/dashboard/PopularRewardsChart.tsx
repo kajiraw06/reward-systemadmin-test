@@ -31,11 +31,11 @@ interface DailyData {
   pending: number
 }
 
-interface CategoryData {
-  name: string
-  value: number
-  [key: string]: string | number
-}
+type CategoryData = {
+  [key: string]: string | number;
+  name: string;
+  value: number;
+};
 
 const COLORS = ['#eab308', '#f59e0b', '#fb923c', '#fbbf24', '#fcd34d', '#fde047', '#facc15', '#fde68a', '#fed7aa', '#fdba74']
 
