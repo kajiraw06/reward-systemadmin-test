@@ -34,6 +34,7 @@ interface DailyData {
 interface CategoryData {
   name: string
   value: number
+  [key: string]: string | number
 }
 
 const COLORS = ['#eab308', '#f59e0b', '#fb923c', '#fbbf24', '#fcd34d', '#fde047', '#facc15', '#fde68a', '#fed7aa', '#fdba74']
@@ -200,11 +201,11 @@ export default function PopularRewardsChart() {
             <ResponsiveContainer width="100%" height={300}>
               <PieChart>
                 <Pie
-                  data={categoryData}
+                  data={categoryData as unknown as Record<string, unknown>[]}
                   cx="50%"
                   cy="50%"
                   labelLine={false}
-                  label={({ name, percent }) => `${name}: ${(percent * 100).toFixed(0)}%`}
+                  label={({ name, percent }) => `${name}: ${((percent ?? 0) * 100).toFixed(0)}%`}
                   outerRadius={100}
                   fill="#8884d8"
                   dataKey="value"

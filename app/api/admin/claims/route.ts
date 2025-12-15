@@ -87,7 +87,7 @@ async function logAction(action: string, claimId: string, status: string, detail
         action: action,
         admin_user: 'Admin', // You can pass this from session/auth
         claim_id: claimId,
-        reward_name: claim?.reward?.name || 'Unknown',
+        reward_name: Array.isArray(claim?.reward) ? (claim.reward[0]?.name || 'Unknown') : (claim?.reward?.name || 'Unknown'),
         user_name: claim?.full_name || claim?.username || 'Unknown',
         details: details || `Claim ${status}`,
         created_at: new Date().toISOString()
