@@ -80,6 +80,13 @@ async function logAction(action: string, claimId: string, status: string, detail
       .eq('claim_id', claimId)
       .single()
 
+    // Prepare safe reward name handling possible array or object shapes
+    const rewardName = (() => {
+      const r: any = (claim as any)?.reward;
+      if (Array.isArray(r)) return r[0]?.name ?? 'Unknown';
+      return r?.name ?? 'Unknown';
+    })();
+
     // Insert audit log
     await supabase
       .from('audit_logs')
@@ -87,7 +94,7 @@ async function logAction(action: string, claimId: string, status: string, detail
         action: action,
         admin_user: 'Admin', // You can pass this from session/auth
         claim_id: claimId,
-        reward_name: Array.isArray(claim?.reward) ? (claim.reward[0]?.name || 'Unknown') : (claim?.reward?.name || 'Unknown'),
+        reward_name: rewardName,
         user_name: claim?.full_name || claim?.username || 'Unknown',
         details: details || `Claim ${status}`,
         created_at: new Date().toISOString()
